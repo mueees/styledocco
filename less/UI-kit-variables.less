@@ -1,0 +1,168 @@
+﻿
+
+// #### Dependences
+//
+// no references
+
+
+
+// Extra classes
+// ==============
+// 
+// Hide something 
+// -------------------
+// To hide some content you can use `hidden` class or add style "display: none" inline in element. 
+// Keep in mind difference between `visibility:hidden` and `display:none`
+// * `display:none` means that the the tag in question will not appear on the page at all (although you can still interact with it through the dom). There will be no space allocated for it between the other tags.
+// * `.hidden` ( = `visibility:hidden`) means that unlike display:none, the tag is not visible, but space is allocated for it on the page. The tag is rendered, it just isn't seen on the page.
+// 
+.hidden {visibility: hidden;}
+
+// To hide text you can use `hideText` 
+
+.hideText{
+   text-indent: -999em;
+   letter-spacing: -999em;
+   overflow: hidden;
+}
+
+// To change font weight or font style you can use appropriate class: 
+//
+// * `.light`
+// * `.regular`
+// * `.semibold`
+// * `.bold`
+// * `.extrabold`
+// * `.italic`
+
+.light {font-weight: 300;}
+.regular {font-weight: 400;}
+.semibold {font-weight: 600;}
+.bold {font-weight: 700;}
+.extrabold {font-weight: 800;}
+.italic {font-style: italic;}
+
+
+// Floating and clearfix
+// ---------------------
+//
+// `f-left`, `f-right` and the class `floated-items-inner` have to be added to parrrent container to prevent [the great collaplse](http://phrogz.net/css/understandingfloats.html)  
+
+.f-left {float: left;}
+.f-right {float:right;}
+.floated-items-inner {overflow:hidden;}
+.clear  {clear:both;}
+.b-clear {width:100%; overflow:hidden;}
+
+// The clearfix hack is one more way to contain floats without resorting to using presentational markup.
+//
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the contenteditable attribute is included anywhere else in the document.
+// Otherwise it causes space to appear at the top and bottom of elements that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using `:before` to contain the top-margins of child elements.
+//
+
+.clearfix:before,
+.clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+
+  // For IE 6/7 only: rule to trigger hasLayout and contain floats
+
+
+.clearfix {
+  *zoom: 1;
+}
+
+// Media queries breakpoints
+// =========
+//
+// To define style for spesific device: `@media` (function to created media query) and `@<device type>`, where <device type> is appropriate variable
+// * Phone: `@mobile`
+// * Tablet: `@tablet`
+// * Desktop: `@desktop`
+//
+//
+// **Example:** 
+//
+//  *@media @tablet { footer {width: 600px;} }*
+//
+//  *footer {width: 600px; @media @mobile { width: 300px; }} *
+//
+//
+// **Output:**
+//
+//  *@media "only screen and (min-width: 992px)"{footer{width:940px}}*
+//
+//  *@media "only screen and (min-width: 768px) and (max-width: 991px)"{footer{width:600px}}*
+//
+//  *@media "only screen and (max-width: 991px)"{footer{width:300px}}*
+
+// Major breakpoints
+
+@desktop: 
+    ~"screen and (min-width: 1600px)";
+
+
+@tablet: 
+    ~"screen and (max-width: 1599px)",
+    ~"screen and (max-device-width: 1280px)", 
+    ~"screen and (-webkit-min-device-pixel-ratio: 2)",
+    ~"screen and (   min--moz-device-pixel-ratio: 2) and (max-device-width: 1280px)",
+    ~"screen and (     -o-min-device-pixel-ratio: 2/1) and (max-device-width: 1280px)",
+    ~"screen and (        min-device-pixel-ratio: 2) and (max-device-width: 1280px)",
+    ~"screen and (                min-resolution: 192dpi) and (max-device-width: 1280px)",
+    ~"screen and (                min-resolution: 2dppx) and (max-device-width: 1280px)";
+
+@mobile:
+    ~"screen and (max-width: 480px)",
+    ~"screen and (max-device-width: 800px)";
+
+
+
+/*
+    
+.show-if-tablet() {
+    display: none;
+
+    @media screen and (max-width: 980px) {
+        display: initial;
+    }
+}
+
+.show-if-tablet {
+    .show-if-tablet();
+}
+.hide-if-tablet {
+    display:initial;
+}
+
+
+    .hide-if-tablet {
+        display:none;
+    }
+}
+    
+*/
+
+
+// AngularJS classes 
+// =========
+//
+
+[ng\:cloak], 
+[ng-cloak], 
+[data-ng-cloak], 
+[x-ng-cloak], 
+.ng-cloak, 
+.x-ng-cloak, 
+.ng-hide {
+    display: none !important;
+}

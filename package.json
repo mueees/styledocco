@@ -1,0 +1,14 @@
+{
+  "name": "styledocco",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mueees/styledocco.git"
+  },
+  "devDependencies": {
+    "styledocco": "latest"
+  },
+  "author": "",
+  "homepage": "https://github.com/mueees/styledocco"
+}

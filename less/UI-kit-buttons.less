@@ -1,0 +1,801 @@
+﻿
+
+// #### Dependences
+//
+// _Color palete and imported files that are listed leftward -->_
+@import "UI-kit-mixins.less";
+@import "UI-kit-variables.less";
+
+// Buttons
+// =============
+// As a convention, buttons have to be used for actions while hyperlinks are to be used for objects.
+// _For instance, "Download" should be a button while "recent activity" should be a link._
+// * [How to create standart button](#default-button)
+// * [How to disable button](#buttons-disabling)
+// * [How to change button size](#multiple-sizes)
+// * [Flat buttons](#flat-buttons)
+// * [Additional button colors](#additional-button-colors)
+// * [Buttons Group](#buttons-group)
+// * [More buttons](#more-buttons)
+//
+//
+// #### Buttons with icon
+// Buttons with icon require approprite class and additional inline-element (`span` or `b`) with class `btn-icon`.
+// The following buttons with icon are ready for usage:
+// * [Add to cart](#add-to-cart-button)
+// * [Download](#download-button)
+// * [Upload](#upload-button)
+// * [Prev/next buttons](#prevnext-buttons)
+
+button::-moz-focus-inner { // fixes for browsers
+    padding: 0;
+    border: 0;
+}
+
+
+// Default button
+// ==============
+// No additional classes required to create standard cyan button with using `button` element:
+//
+//    <button>Button element</button>
+//
+//
+// Button styles can be applied to anything with the `button` class applied. However, typically you'll want to apply these to only inline elemetns (`a` and `span`).
+//
+//    <a href="#" class="button">Inline element</a>
+//
+
+button, .button {
+    //------- Position
+    position: relative; // can contain element with position absolute (.btn-icon)
+    vertical-align: middle;
+    //------- Box-model
+    margin-bottom: 2px;
+    border: none;
+    //------- Typography
+    .semibold();
+    .text-shadow(0 1px 2px fade(@dark-bluish-gray, 60)); // less function: 'fade' - set the absolute transparency of a color
+    font-size: 16px;
+    line-height: 1.4;
+    color: white;
+    text-decoration: none;
+    //------- Visual
+    .border-radius(4px);
+    background-color: @vivid-cerulean;
+    .box-shadow(0 2px 0 fade(@dark-bluish-gray, 80)); // less function: 'fade' - set the absolute transparency of a color
+    //------- Misc
+    cursor: pointer;
+
+    &:active,
+    &:hover,
+    &:focus {
+        color: white; // change txt-color
+        background-color: @cerulean-blue; // change bg-color
+        outline: none; // remove outline when active or focus in chrome
+    }
+    // to fix issue with unclickable 2px (on top)
+    &:active {
+        &:hover {
+            margin-top: 2px; //add margin-bottom
+            margin-bottom: 0; // remove margin-top
+            .box-shadow(none); // hide box-shadow
+        }
+    }
+}
+
+a.button, span.button {
+    display: inline-block;
+}
+
+button {
+    overflow: visible; //added to fix Extra width in IE 7
+    padding: 8px 18px;
+}
+
+.button {
+    padding: 8px 16px; // different headings required to ensure that a button element and an inline element style like button have same width
+}
+
+// Flat buttons
+// =================
+//
+// We are using flat buttons for our API pages and for redesign 
+//
+// Flat Button requires the following additional classes: 
+// *type definition:`btn-flat` 
+// *and color definition: `transparent-white`, `transparent-navy-gray`, `dark-bluish-gray` , `navy-gray`, `navy-blue`, `white` or `orange-red`
+//
+//    <div style="background-color:#cccccc; padding: 8px 0;">
+//    <a href="/" class="button btn-flat transparent-cerulean-blue">Transparent cerulean blue</a>
+//    <a href="/" class="button btn-flat transparent-navy-gray">Transparent navy gray</a>
+//    <a href="/" class="button btn-flat transparent-white">Transparent white</a>
+//    <a href="/" class="button btn-flat dark-bluish-gray">Dark bluish gray</a>
+//    <a href="/" class="button btn-flat navy-gray">Navy gray</a>
+//    <a href="/" class="button btn-flat navy-blue">Navy blue</a>
+//    <a href="/" class="button btn-flat white">White</a>
+//    <a href="/" class="button btn-flat orange-red">Orange red</a>
+//    </div>
+
+
+
+.btn-flat,
+button.btn-flat {
+    .border-radius(3px);
+    border: 1px solid white;
+    .box-shadow(none);
+    text-transform: uppercase;
+    .semibold;
+    text-shadow: none;
+    opacity: 1;
+    .transition-duration(0.2s);       
+
+    &.transparent-white {
+        background: none;
+        .white-txt;
+        border-color:white;
+    }
+    &.transparent-navy-gray {
+        background: none;
+        .navy-gray-txt;
+        border-color: @navy-gray;
+    }
+    &.transparent-cerulean-blue {
+        background: none;
+        .cerulean-blue-txt;
+        border-color: @cerulean-blue;
+    }
+    &.navy-gray {
+        background: @navy-gray;
+        .white-txt;
+        border-color: @navy-gray;
+    }
+    &.dark-bluish-gray {
+        background: @dark-bluish-gray;
+        .white-txt;
+        border-color: @dark-bluish-gray;
+    }
+    &.white {
+        background: white;
+        .navy-blue-txt;
+    }
+    &.navy-blue {
+        background: @navy-blue;
+        .white-txt;
+        border-color:@navy-blue;
+    }
+    &.orange-red {
+        background: #ea6554; 
+        .white-txt;
+        border-color:#ea6554;
+    }
+    &:hover {
+        background: rgba(0,0,0,0.3);
+        .white-txt;
+        border-color: #c3c3c3;
+    } 
+    // to remove margin-top animation for flat buttons on main site
+    &:active {
+        &:hover {
+            margin-top: 0; //add margin-bottom
+            margin-bottom: 2px; // remove margin-top
+            .box-shadow(none); // hide box-shadow
+        }
+    }
+}
+
+
+
+//-------------- Hovering -----------------------
+
+.hover-darken(@color) when (@color = white) {
+    &:hover {
+        background: darken(@color, 2%);
+        border-color: darken(@color, 2%);
+    }
+}
+
+.hover-darken(@color) when not (@color = white) {
+    &:hover {
+        background: darken(@color, 7%);
+        border-color: darken(@color, 7%);
+    }
+}
+
+.hover-fill(@color) when (@color = white) {
+    &:hover {
+        background: @color;
+        color: @navy-gray;
+    }
+}
+
+.hover-fill(@color) when not (@color = white) {
+    &:hover {
+        background: @color;
+        color: white;
+    }
+}
+
+// Disabled buttons
+// ================
+// Add attribute `disabled` to disable `button`.
+//
+//    <button disabled='disabled'>Disabled button</button>
+//
+// Add class `btn-disabled` to change style of inline element from default to disabled
+//
+//    <a href="#" class="button btn-disabled">Disabled button</a>
+//    <a href="#" class="button btn-flat btn-disabled">Disabled flat button</a>
+
+.disabled-button () {
+    //------- Position
+    margin-bottom: 0;
+    margin-top: 2px;
+    //------- Typography
+    color: #efefef;
+    .semibold;
+    .text-shadow(none);
+    //------- Visual
+    background-color: @medium-gray;
+    border-color: @medium-gray;
+    .box-shadow(none);
+    //------- Misc
+    cursor: default;
+}
+
+button:disabled,
+button.btn-disabled,
+.button.btn-disabled,
+.btn-flat:disabled,
+button.btn-flat:disabled {
+    .disabled-button;
+
+    &:active,
+    &:hover {
+        .disabled-button;
+    }
+}
+
+
+// Multiple sizes
+// =============
+// Fancy larger or smaller buttons?
+//
+// #### Small button
+//
+// Change button size from default to small with class `btn-small`
+//
+//    <a href="#" class="button btn-small">Small button</a>
+//    <a href="#" class="button btn-flat navy-blue btn-small">Small flat button</a>
+.btn-small {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    font-size: 12px;
+
+    &.no-icon {
+        padding-right: 20px!important;
+    }
+}
+
+// #### Large button
+//
+// Change button size from default to large with class `btn-large`
+//
+//    <a href="#" class="button btn-large">Large button</a>
+//    <a href="#" class="button btn-flat navy-blue btn-large">Large flat button</a>
+.btn-large {
+    font-size: 20px;
+    padding: 10px 20px;
+
+    &.no-icon {
+        padding-right: 10px!important;
+    }
+}
+
+.btn-icon {
+    position: absolute;
+    display: inline-block;
+    background-image: url("/img/sprite-button-icons.png");
+    background-repeat: no-repeat;
+}
+
+// Additional button colors
+// =======================
+//
+//  #### Red button
+//
+// *Usage description TBD*
+//
+//    <a href="/" class="button btn-red" >Red button</a>
+.btn-red {
+    .box-shadow(0 2px 0 fade(#660000, 80)); // less function: 'fade' - set the absolute transparency of a color
+    background-color: @strong-red;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: @brilliant-red;
+    }
+}
+
+//  #### gray button
+//
+// *Usage description TBD*
+//
+//    <a href="#" class="button btn-gray">Gray button</a>
+button.btn-gray,
+.button.btn-gray {
+    .box-shadow(0 2px 0 fade(@dark-bluish-gray, 50)); // less function: 'fade' - set the absolute transparency of a color
+    background-color: @medium-gray;
+
+    &:hover,
+    &:active {
+        background-color: #dfdfdf;
+    }
+}
+
+.fileinput-button input:hover + span.button.btn-gray {
+    background-color: #dfdfdf;
+    color: #FFFFFF;
+}
+
+
+// Add to cart button
+// ==================
+//
+// Element: `button`, class `btn-add2cart` and icon container (`span` with class `btn-icon`)
+//
+//    <button class="btn-add2cart"> <span class="btn-icon"></span> Add to cart </button>
+
+button.btn-add2cart,
+.button.btn-add2cart {
+    padding-left: 45px;
+
+    .btn-icon {
+        top: 6px;
+        left: 10px;
+        width: 31px;
+        height: 26px;
+        background-position: 0 0;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 10px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 0;
+        }
+    }
+}
+
+    // **Disabled Add to cart button**
+    //
+    //    <button class="btn-add2cart" disabled="disabled"> <span class="btn-icon"></span> Add to cart </button>
+
+    button.btn-add2cart:disabled,
+    .btn-disabled.btn-add2cart {
+        .btn-icon {
+            top: 6px;
+            left: 12px;
+            width: 31px;
+            height: 26px;
+            background-position: 0 -72px;
+        }
+
+        &.btn-large {
+            .btn-icon {
+                top: 8px;
+            }
+        }
+
+        &.btn-small {
+            .btn-icon {
+                top: -1px;
+            }
+        }
+    }
+
+// Download button
+// ===============
+//
+// Element: `button`, class `btn-download`  and icon container (`span` with class `btn-icon`)
+//
+//    <button class="btn-download"> <span class="btn-icon"></span> Download </button>
+
+button.btn-download,
+.button.btn-download {
+    padding-right: 42px;
+
+    .btn-icon {
+        top: 7px;
+        right: 6px;
+        width: 31px;
+        height: 26px;
+        background-position: 4px -217px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 10px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: -1px;
+        }
+    }
+}
+
+// **Disabled "Download" button**
+//
+//    <button class="btn-download" disabled="disabled"> <span class="btn-icon"></span> Download </button>
+
+.btn-download:disabled,
+.btn-disabled.btn-download {
+    .btn-icon {
+        background-position: 6px -144px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 12px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 0;
+        }
+    }
+}
+
+// Upload button
+// =============
+//
+// Element: `button`, class `btn-upload`  and icon container (`span` with class `btn-icon`)
+//
+//    <button class="btn-upload"> <span class="btn-icon"></span> Upload your design </button>
+
+button.btn-upload,
+.button.btn-upload {
+    padding-right: 40px;
+
+    .btn-icon {
+        top: 8px;
+        right: 6px;
+        width: 31px;
+        height: 26px;
+        background-position: 4px -353px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 14px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 3px;
+        }
+    }
+}
+
+// **Disabled Upload button**
+//
+//    <button class="btn-upload" disabled="disabled"> <span class="btn-icon"></span> Upload your design</button>
+
+.btn-upload:disabled,
+.btn-disabled.btn-upload {
+    .btn-icon {
+        background-position: 6px -281px;
+    }
+}
+
+// ### Upload button for 3dprintlab
+//
+//    <span class="fileinput-button">
+//      <input type="file" id="file4" name="file">
+//      <span class="button btn-upload btn-large">
+//        <span class="btn-icon"></span>
+//        Upload your design
+//      </span>
+//    </span>
+
+.fileinput-button,
+.form-inner.default-style .fileinput-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    height: 50px;
+    cursor: pointer;
+
+    .button {
+        padding-left: 20px;
+        padding-right: 40px;
+        z-index: 100;
+        cursor: pointer;
+
+        &.no-icon {
+            padding: 8px 20px;
+        }
+    }
+
+    input[type="file"] {
+        //------- Position
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 1000;
+        //------- Box-model
+        margin: 0;
+        //------- Typography
+        font-size: 250px;
+        //------- Visual
+        opacity: 0;
+        -ms-filter: 'alpha(opacity=0)'; // Fix for IE old versions
+        filter: alpha(opacity=0); // Fix for IE old versions
+        //------- Misc
+        cursor: pointer;
+
+
+        &:hover {
+            & + span.button {
+                color: white;
+                background-color: @cerulean-blue;
+            }
+
+            & + .btn-flat.button {
+                color: white;
+                background: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+
+        &:active {
+            & + span.button {
+                margin-bottom: 0;
+                margin-top: 2px;
+                .box-shadow(none);
+            }
+
+            & + .btn-flat.button {
+                color: white;
+                margin-bottom: 2px;
+                margin-top: 0;
+                background: rgba(0, 0, 0, 0.3);
+            }
+        }
+    }
+
+    &.btn-small {
+        height: auto;
+
+        input {
+            cursor: pointer;
+            line-height: 0;
+        }
+
+        .button.btn-upload {
+            padding-right: 20px;
+            .btn-small;
+
+            .btn-icon {
+                display: none;
+            }
+        }
+    }
+
+    &.disabled {
+        input:hover {
+            cursor: default;
+        }
+
+        .button.btn-upload {
+            .disabled-button;
+
+            &:active,
+            &:hover {
+                .disabled-button;
+            }
+        }
+    }
+}
+
+// Prev/next buttons
+// =================
+//
+// Element: `button`, class `btn-prev` or `btn-next` and icon container (`span` with class `btn-icon`)
+//
+//    <a class="button btn-prev">
+//      <span class="btn-icon"></span>
+//        Prev
+//    </a>
+//    <a class="button btn-next">
+//      <span class="btn-icon"></span>
+//        Next
+//    </a>
+//
+// #### Disabled prev and next buttons
+//
+//    <a class="button btn-prev btn-disabled">
+//      <span class="btn-icon"></span>
+//        Prev
+//    </a>
+//    <a class="button btn-next btn-disabled">
+//      <span class="btn-icon"></span>
+//        Next
+//    </a>
+button.btn-prev,
+.button.btn-prev {
+    padding-left: 40px;
+
+    .btn-icon {
+        top: 8px;
+        left: 10px;
+        width: 31px;
+        height: 26px;
+        background-position: 4px -569px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 13px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 1px;
+        }
+    }
+}
+
+.btn-prev:disabled,
+.btn-disabled.btn-prev {
+    .btn-icon {
+        top: 8px;
+        left: 10px;
+        width: 31px;
+        height: 26px;
+        background-position: 6px -514px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 12px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 0;
+        }
+    }
+}
+
+button.btn-next,
+.button.btn-next {
+    padding-right: 40px;
+
+    .btn-icon {
+        top: 8px;
+        right: 8px;
+        width: 31px;
+        height: 26px;
+        background-position: 4px -463px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 13px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 0px;
+        }
+    }
+}
+
+.btn-next:disabled,
+.btn-disabled.btn-next {
+    .btn-icon {
+        background-position: 6px -410px;
+        width: 31px;
+        height: 26px;
+        top: 8px;
+        right: 8px;
+    }
+
+    &.btn-large {
+        .btn-icon {
+            top: 13px;
+        }
+    }
+
+    &.btn-small {
+        .btn-icon {
+            top: 1px;
+        }
+    }
+}
+// Buttons Group
+// =================
+// To create a group of three buttons with two inline and one full-width buttons, follow next:
+// - use standard inline elements for inline buttons with classes `button` and `btn-flat`
+// - use class `btn-block` for full-width button
+// - wrap buttons in mark down shown below
+//
+//
+//    <div class="lg-row buttons-wrapper" >
+//        <div class="buttons-inner-wrapper">
+//            <div>
+//                <a href="#" class="button btn-flat transparent-navy-gray btn-small">Transparent Navy gray</a>
+//                <a href="#" class="button btn-flat navy-gray btn-small">Navy gray</a>
+//            </div>
+//            <a href="#" class="button btn-flat orange-red btn-block" style="margin-top:5px;">Orange red</a>
+//        </div>
+//    </div>
+//
+// *The width of block button is the width of two inline buttons*
+.btn-block {
+    display: inline-block;
+    width: 100%;
+    .box-sizing(border-box);
+}
+
+.buttons-wrapper {
+    text-align: center;
+}
+
+.buttons-inner-wrapper {
+    display: inline-block;
+}
+
+.buttons-in-line {
+    text-align: center;
+
+    button,
+    .button {
+        @media @tablet {
+            margin-top: 5px;
+        }
+        @media @mobile {
+            display: block;
+        }
+    }
+}
+
+// More buttons
+// =================
+// The buttons are using in shop (navigation between shop items) and on modeling service (navigation between designer profiles).
+// Depends from: `imat.master.js`
+
+
+.b-navigationByContext {
+    left: 50%;
+    margin-left: -530px;
+    overflow: hidden;
+    padding: 12px 5px;
+    position: absolute;
+    top: 100px;
+    width: 1050px;
+
+    .prev {
+        float: left;
+    }
+
+    .next {
+        float: right;
+    }
+
+    span {
+        opacity: 0.6;
+    }
+}
